@@ -2,4 +2,14 @@
     <string name="app_name">GitSearch</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="label_hint">Type to search</string>
+    <string name="label_name">Name</string>
+    <string name="format_repos">%s Public Repository · %s Private Repository</string>
+    <string name="format_follower">%s Followers</string>
+    <string name="label_follower">Follower</string>
+    <string name="format_following">%s Following</string>
+    <string name="label_following">Following</string>
+    <string name="format_joined">Joined %s</string>
+    <string name="label_username">username</string>
+    <string name="label_empty">Empty</string>
 </resources>
