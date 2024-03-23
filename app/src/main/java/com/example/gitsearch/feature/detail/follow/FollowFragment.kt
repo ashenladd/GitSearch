@@ -12,8 +12,7 @@ import com.example.gitsearch.feature.detail.follow.adapter.FollowAdapter
 
 
 class FollowFragment : Fragment() {
-    private var _binding: FragmentFollowBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentFollowBinding
 
     private val followAdapter: FollowAdapter by lazy {
         FollowAdapter()
@@ -24,7 +23,7 @@ class FollowFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        _binding = FragmentFollowBinding.inflate(
+        binding = FragmentFollowBinding.inflate(
             inflater,
             container,
             false
@@ -98,11 +97,6 @@ class FollowFragment : Fragment() {
             )
             rvFollow.adapter = followAdapter
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     companion object {

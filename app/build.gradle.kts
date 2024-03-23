@@ -17,6 +17,10 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -24,6 +28,14 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+        }
+        debug {
+            buildConfigField("String", "API_KEY", "\"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\"")
+            buildConfigField("String", "BASE_URL", "\"https://api.github.com/\"")
+        }
+        release {
+            buildConfigField("String", "API_KEY", "\"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\"")
+            buildConfigField("String", "BASE_URL", "\"https://api.github.com/\"")
         }
     }
     compileOptions {

@@ -18,8 +18,7 @@ import com.example.gitsearch.feature.detail.DetailActivity
 import com.example.gitsearch.feature.search.adapter.SearchAdapter
 
 class SearchActivity : AppCompatActivity() {
-    private var _binding: ActivitySearchBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: ActivitySearchBinding
 
     private val searchAdapter: SearchAdapter by lazy { SearchAdapter() }
 
@@ -28,7 +27,7 @@ class SearchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        _binding = ActivitySearchBinding.inflate(layoutInflater)
+        binding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -136,10 +135,5 @@ class SearchActivity : AppCompatActivity() {
         super.onConfigurationChanged(newConfig)
 
         setupAdapter()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
     }
 }

@@ -25,8 +25,7 @@ class DetailActivity : AppCompatActivity() {
         )
     }
 
-    private var _binding: ActivityDetailBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: ActivityDetailBinding
 
     private val detailId by lazy { intent.getStringExtra(EXTRA_DETAIL) }
 
@@ -39,7 +38,7 @@ class DetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        _binding = ActivityDetailBinding.inflate(layoutInflater)
+        binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -70,7 +69,10 @@ class DetailActivity : AppCompatActivity() {
             vpDetail.adapter = detailPagerAdapter
 
             val tabs: TabLayout = tlDetail
-            TabLayoutMediator(tabs, vpDetail) { tab, position ->
+            TabLayoutMediator(
+                tabs,
+                vpDetail
+            ) { tab, position ->
                 tab.text = getString(TAB_TITLES[position])
             }.attach()
             supportActionBar?.elevation = 0f
@@ -117,8 +119,4 @@ class DetailActivity : AppCompatActivity() {
         binding.cpiDetail.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
-    }
 }

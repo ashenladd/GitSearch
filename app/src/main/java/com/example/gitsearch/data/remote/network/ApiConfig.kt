@@ -1,7 +1,6 @@
 package com.example.gitsearch.data.remote.network
 
-import com.example.gitsearch.data.remote.network.Constant.API_KEY
-import com.example.gitsearch.data.remote.network.Constant.BASE_URL
+import com.example.gitsearch.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -11,14 +10,18 @@ import retrofit2.converter.gson.GsonConverterFactory
 class ApiConfig {
     companion object {
         fun getApiService(): ApiService {
-            val interceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+            val interceptor = if(BuildConfig.DEBUG){
+                HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+            } else{
+                HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE)
+            }
 
             val authInterceptor = Interceptor { chain ->
                 val req = chain.request()
                 val requestHeaders = req.newBuilder()
                     .addHeader(
                         "Authorization",
-                        API_KEY
+                        BuildConfig.API_KEY
                     )
                     .build()
                 chain.proceed(requestHeaders)
@@ -30,7 +33,7 @@ class ApiConfig {
                 .build()
 
             val retrofit = Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(BuildConfig.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()
