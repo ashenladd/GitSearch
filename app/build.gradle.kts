@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.googleDevtoolsKsp)
 }
 
 android {
@@ -69,8 +70,23 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.datastore.preferences)
 
     implementation (libs.android.lottie)
+
+    implementation(libs.androidx.room.runtime)
+    testImplementation(libs.junit.v412)
+    ksp(libs.androidx.room.compiler)
+
+    androidTestImplementation(libs.androidx.runner)
+    androidTestImplementation(libs.androidx.rules)
+
+    implementation(libs.androidx.core.splashscreen)
+
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.inline)
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

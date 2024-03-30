@@ -9,20 +9,27 @@ import android.view.inputmethod.EditorInfo
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.hardware.display.DisplayManagerCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.gitsearch.databinding.ActivitySearchBinding
 import com.example.gitsearch.feature.detail.DetailActivity
+import com.example.gitsearch.feature.favorite.FavoriteActivity
 import com.example.gitsearch.feature.search.adapter.SearchAdapter
+import com.example.gitsearch.util.ViewModelFactory
 
 class SearchActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySearchBinding
 
+    private val factory by lazy { ViewModelFactory.getInstance(this) }
+
     private val searchAdapter: SearchAdapter by lazy { SearchAdapter() }
 
-    private val searchViewModel: SearchViewModel by viewModels()
+    private val searchViewModel: SearchViewModel by viewModels {
+        factory
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,10 +47,21 @@ class SearchActivity : AppCompatActivity() {
             insets
         }
 
+
         setupSearchBar()
         setupAdapter()
         setupObserver()
+        setClickListener()
     }
+
+    private fun setClickListener() {
+        binding.apply {
+            btnFavorite.setOnClickListener {
+                navigateToFavorite()
+            }
+        }
+    }
+
 
     private fun setupAdapter() {
         val defaultDisplay =
@@ -84,8 +102,39 @@ class SearchActivity : AppCompatActivity() {
         searchViewModel.isEmpty.observe(this) {
             showEmpty(it)
         }
+        searchViewModel.getThemeSetting().observe(this) {
+            setupToggle(it)
+        }
     }
 
+    private fun setupToggle(isToggled : Boolean) {
+        binding.apply {
+            if (isToggled) {
+               AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                lavToggle.speed = 0.75f
+                lavToggle.playAnimation()
+                lavToggle.setOnClickListener {
+                    searchViewModel.processEvent(SearchEvent.ToggleMode(false))
+                }
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                lavToggle.speed = -0.75f
+                lavToggle.playAnimation()
+                lavToggle.setOnClickListener {
+                    searchViewModel.processEvent(SearchEvent.ToggleMode(true))
+                }
+            }
+        }
+    }
+
+    private fun navigateToFavorite() {
+        Intent(
+            this,
+            FavoriteActivity::class.java
+        ).apply {
+            startActivity(this)
+        }
+    }
     private fun showLoading(isLoading: Boolean) {
         binding.cpiHome.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
@@ -113,13 +162,14 @@ class SearchActivity : AppCompatActivity() {
 
             svHome
                 .editText
-                .setOnEditorActionListener { textView, actionId, event ->
+                .setOnEditorActionListener { _, actionId, _ ->
                     if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                         sbHome.textView.text = svHome.text
                         svHome.hide()
                         searchViewModel.processEvent(
                             SearchEvent.SearchUser(
-                                svHome.text.toString()
+                                svHome.text.toString(),
+                                this@SearchActivity
                             )
                         )
                         true

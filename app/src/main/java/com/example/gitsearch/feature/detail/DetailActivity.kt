@@ -9,9 +9,11 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
 import com.example.gitsearch.R
+import com.example.gitsearch.data.local.entity.FavoriteUser
 import com.example.gitsearch.databinding.ActivityDetailBinding
 import com.example.gitsearch.feature.detail.adapter.DetailPagerAdapter
 import com.example.gitsearch.feature.detail.model.DetailModel
+import com.example.gitsearch.util.ViewModelFactory
 import com.example.gitsearch.util.parseFormatDate
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -27,9 +29,13 @@ class DetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailBinding
 
+    private val factory by lazy { ViewModelFactory.getInstance(this) }
+
     private val detailId by lazy { intent.getStringExtra(EXTRA_DETAIL) }
 
-    private val detailViewModel: DetailViewModel by viewModels()
+    private val detailViewModel: DetailViewModel by viewModels() {
+        factory
+    }
 
     private val detailPagerAdapter by lazy {
         DetailPagerAdapter(this)
@@ -51,15 +57,43 @@ class DetailActivity : AppCompatActivity() {
             insets
         }
 
-        detailViewModel.processEvent(DetailEvent.GetDetailUser(detailId.orEmpty()))
+        setupData()
         setupObserver()
         setupPager()
         setupToolbar()
     }
 
+    private fun setupData() {
+        detailViewModel.processEvent(
+            DetailEvent.GetDetailUser(
+                detailId.orEmpty(),
+                this
+            )
+        )
+    }
+
     private fun setupToolbar() {
-        binding.toolbar.setNavigationOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
+        binding.apply {
+            toolbar.setNavigationOnClickListener {
+                onBackPressedDispatcher.onBackPressed()
+            }
+            toolbar.setOnMenuItemClickListener { menu ->
+                when (menu.itemId) {
+                    R.id.favorite -> {
+                        detailViewModel.processEvent(
+                            DetailEvent.AddOrDeleteFavoriteUser(
+                                FavoriteUser(
+                                    username = detailId.orEmpty(),
+                                    avatarUrl = detailViewModel.detailData.value?.avatarUrl.orEmpty()
+                                )
+                            )
+                        )
+                        true
+                    }
+
+                    else -> false
+                }
+            }
         }
     }
 
@@ -85,6 +119,15 @@ class DetailActivity : AppCompatActivity() {
         }
         detailViewModel.detailData.observe(this) {
             setDetailData(it)
+            detailViewModel.processEvent(
+                DetailEvent.GetFavoriteUser(
+                    detailViewModel.detailData.value?.username.orEmpty(),
+                    this
+                )
+            )
+        }
+        detailViewModel.isFavorite.observe(this) {
+            showFavorite(it)
         }
     }
 
@@ -117,6 +160,14 @@ class DetailActivity : AppCompatActivity() {
 
     private fun showLoading(isLoading: Boolean) {
         binding.cpiDetail.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    private fun showFavorite(isFavorite: Boolean) {
+        if (isFavorite) {
+            binding.toolbar.menu.findItem(R.id.favorite).setIcon(R.drawable.ic_favorite_active_bg)
+        } else {
+            binding.toolbar.menu.findItem(R.id.favorite).setIcon(R.drawable.ic_favorite_unactive_bg)
+        }
     }
 
 }

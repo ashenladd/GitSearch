@@ -21,7 +21,7 @@ class FollowViewModel : ViewModel() {
     val followingData: LiveData<List<FollowModel>> = _followingData
 
     private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: MutableLiveData<Boolean> = _isLoading
+    val isLoading: LiveData<Boolean> = _isLoading
 
     private val _isEmptyFollowing = MutableLiveData<Boolean>()
     val isEmptyFollowing: LiveData<Boolean> = _isEmptyFollowing
@@ -68,6 +68,7 @@ class FollowViewModel : ViewModel() {
                 _isLoading.value = false
                 _isEmptyFollower.value = _followerData.value?.isEmpty()
             }
+
         })
     }
 
@@ -98,6 +99,7 @@ class FollowViewModel : ViewModel() {
                 _isLoading.value = false
                 _isEmptyFollowing.value = _followingData.value?.isEmpty()
             }
+
         })
     }
 }

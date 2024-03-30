@@ -16,7 +16,7 @@ import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 
-fun ImageView.roundedCornerImage(url: String, corner: Int) {
+fun ImageView.roundedCornerImage(corner: Int) {
     val cornerSize = this.context.dpToPx(corner)
     Glide.with(this.context)
         .asBitmap()

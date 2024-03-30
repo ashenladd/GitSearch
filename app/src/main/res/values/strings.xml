@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">GitSearch</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="label_hint">Type to search</string>
     <string name="label_name">Name</string>
     <string name="format_repos">%s Public Repository · %s Private Repository</string>
@@ -12,4 +11,6 @@
     <string name="format_joined">Joined %s</string>
     <string name="label_username">username</string>
     <string name="label_empty">Empty</string>
+    <string name="label_favorite">Favorite</string>
+    <string name="label_favorite_users">Favorite Users</string>
 </resources>

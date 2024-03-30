@@ -3,5 +3,5 @@
     <corners
         android:topLeftRadius="30dp"
         android:topRightRadius="30dp" />
-    <solid android:color="@color/white" /> <!-- Menambahkan atribut solid untuk mengatur latar belakang menjadi abu-abu -->
+    <solid android:color="?attr/colorSurface" /> <!-- Menambahkan atribut solid untuk mengatur latar belakang menjadi abu-abu -->
 </shape>

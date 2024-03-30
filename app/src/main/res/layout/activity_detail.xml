@@ -2,22 +2,19 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/coorLayout_detail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="?attr/colorSurface"
     android:orientation="vertical"
     tools:context=".feature.detail.DetailActivity">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/apl_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         app:elevation="0dp">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/ctl_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
@@ -26,7 +23,6 @@
             app:titleEnabled="false">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
@@ -50,6 +46,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:menu="@menu/top_app_bar"
                     app:navigationIcon="@drawable/ic_back_bg" />
 
                 <View
@@ -102,9 +99,9 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="@string/label_username"
-                    android:textStyle="italic"
                     android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
                     android:textColor="@color/material_dynamic_neutral60"
+                    android:textStyle="italic"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/iv_profile_user"
                     app:layout_constraintTop_toBottomOf="@+id/tv_name" />
@@ -191,7 +188,7 @@
             android:id="@+id/tl_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="?attr/colorSurface"
             app:tabIndicatorHeight="2dp"
             app:tabTextAppearance="@style/TextAppearance.Material3.TitleMedium" />
 
@@ -202,6 +199,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="8dp"
+        android:background="?attr/colorSurface"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
