@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="IconLocation">
+        <ignore path="D:/Personal Study/Project Kotlin/GitSearch/app/src/main/res/drawable/bg_profile.jpg" />
+        <ignore path="D:/Personal Study/Project Kotlin/GitSearch/app/src/main/res/drawable/img_home.png" />
+    </issue>
+</lint>
