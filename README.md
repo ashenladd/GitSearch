@@ -1,6 +1,6 @@
 # 🔍 GitSearch - A GitHub User & Repository Finder
 
-**GitSearch** is a mobile application that allows users to **search for GitHub users and repositories**, view user details, and save favorites. Developed as part of the **Bangkit 2024 program**, this project showcases skills in **Android development, API integration, and UI/UX design**.
+**GitSearch** is a mobile application that allows users to **search for GitHub users and repositories**, view user details, and save favorites. Developed as part of the **Bangkit 2024 program**, this project showcases skills in **Android development, API integration, and UI/UX design**. [Application Demo](https://drive.google.com/file/d/148N5X6l34wfWIGok_Rha25RQI2Qqw--V/view?usp=sharing)
 
 ![Frame 4](https://github.com/user-attachments/assets/32f15e04-2a08-48f9-bd7c-1bdbe7e490dc)
 ![Frame 5](https://github.com/user-attachments/assets/5de76cfb-d3c1-433e-94e9-9f302bbf6358)
